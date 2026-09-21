@@ -50,12 +50,24 @@ export default class SignatureCaptureLWC extends LightningElement {
         const state = pageRef?.state;
         if (!state || state.c__channel !== 'Mobile') return;
 
-        const capture = this._parseStateParam(state.c__capture);
-        const summary = this._parseStateParam(state.c__summary);
+        const caseId = this._parseStateParam(state.c__caseId);
+        const caseNumber = this._parseStateParam(state.c__caseNumber);
+        const caseSubject = this._parseStateParam(state.c__caseSubject);
+        const accountId = this._parseStateParam(state.c__accountId);
+        const accountName = this._parseStateParam(state.c__accountName);
+        const pricebookId = this._parseStateParam(state.c__pricebookId);
+        const products = this._parseStateParam(state.c__products);
 
-        if (capture == null && summary == null) return;
+        if (
+            caseId == null &&
+            caseNumber == null &&
+            accountName == null &&
+            products == null
+        ) {
+            return;
+        }
 
-        this._applyValue({ capture, summary });
+        this._applyValue({ caseId, caseNumber, caseSubject, accountId, accountName, pricebookId, products });
     }
 
     _parseStateParam(raw) {
@@ -84,32 +96,24 @@ export default class SignatureCaptureLWC extends LightningElement {
         return this._value;
     }
 
-    get _capture() {
-        return this._parsed?.capture ?? null;
-    }
-
     get hasCapture() {
-        return !!this._capture;
-    }
-
-    get summary() {
-        return this._parsed?.summary ?? '';
+        return !!this._parsed;
     }
 
     get caseNumber() {
-        return this._capture?.caseNumber ?? '';
+        return this._parsed?.caseNumber ?? '';
     }
 
     get caseSubject() {
-        return this._capture?.caseSubject ?? '';
+        return this._parsed?.caseSubject ?? '';
     }
 
     get accountName() {
-        return this._capture?.accountName ?? '';
+        return this._parsed?.accountName ?? '';
     }
 
     get products() {
-        return this._capture?.products ?? [];
+        return this._parsed?.products ?? [];
     }
 
     get isReady() {
@@ -251,7 +255,7 @@ export default class SignatureCaptureLWC extends LightningElement {
         this.submitting = true;
         this.error = undefined;
 
-        const capture = this._capture;
+        const capture = this._parsed;
         const today = new Date().toISOString().slice(0, 10);
 
         createRecord({
