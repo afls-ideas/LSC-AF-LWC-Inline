@@ -11,6 +11,25 @@ just inspecting code:
 | Case Escalation Summary | `GetCaseEscalationSummaryAction` | `caseEscalationSummaryCLT` | `caseEscalationSummaryLWC` | Real — live `Case`/`CaseMilestone` query |
 | HCP Engagement Timeline | `GetHcpEngagementTimelineAction` | `hcpEngagementTimelineCLT` | `hcpEngagementTimelineLWC` | Real — live query across `Visit`, `MedicalInsightAccount`, `LSDO_Medical_Conference_Activity__c`, `Inquiry` |
 
+## Screenshots: confirmed rendering on Web, iPad, and iPhone
+
+**Web** (HCP Engagement Timeline example):
+
+![Web](images/hcp-engagement-timeline-web.png)
+
+**iPad**, standard Salesforce Mobile App (Field Stock Snapshot example):
+
+![iPad](images/field-stock-snapshot-ipad.png)
+
+**iPhone**, standard Salesforce Mobile App (Field Stock Snapshot example):
+
+![iPhone](images/field-stock-snapshot-iphone.png)
+
+> **Note on iPad/mobile support:** the standard Salesforce Mobile App on iPad
+> *does* support rendering inline LWCs from Agentforce chat, but this isn't
+> turned on by default — it requires opening a case with Salesforce to have
+> it enabled for the org.
+
 The three data-bearing examples query real Salesforce records live — none
 of them fabricate data, and a real query can legitimately return no match
 (the card is `null` in that case; see each example's doc for the exact
