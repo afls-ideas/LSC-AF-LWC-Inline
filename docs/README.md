@@ -10,7 +10,7 @@ just inspecting code:
 | Field Stock Snapshot | `GetFieldStockSnapshotAction` | `fieldStockSnapshotCLT` | `fieldStockSnapshotLWC` | Real — live `ProductBatchItem` query |
 | Case Escalation Summary | `GetCaseEscalationSummaryAction` | `caseEscalationSummaryCLT` | `caseEscalationSummaryLWC` | Real — live `Case`/`CaseMilestone` query |
 | HCP Engagement Timeline | `GetHcpEngagementTimelineAction` | `hcpEngagementTimelineCLT` | `hcpEngagementTimelineLWC` | Real — live query across `Visit`, `MedicalInsightAccount`, `LSDO_Medical_Conference_Activity__c`, `Inquiry` |
-| Signature Capture | `GetSignatureCaptureAction` | `signatureCaptureCLT` | `signatureCaptureLWC` | Real — live `Case`/`Pricebook2`/`PricebookEntry`/`Product2` query, plus a client-side `Order`/`OrderItem` write |
+| Signature Capture ⚠️ **not yet working, see below** | `GetSignatureCaptureAction` | `signatureCaptureCLT` | `signatureCaptureLWC` | Real — live `Case`/`Pricebook2`/`PricebookEntry`/`Product2` query, plus a client-side `Order`/`OrderItem` write |
 
 ## Screenshots: confirmed rendering on Web, iPad, and iPhone
 
@@ -31,6 +31,13 @@ just inspecting code:
 > *does* support rendering inline LWCs from Agentforce chat, but this isn't
 > turned on by default — it requires opening a case with Salesforce to have
 > it enabled for the org.
+
+**Signature Capture is currently known-broken** — the card does not render
+correctly in the live chat widget as of 2026-09-21. A data-binding bug was
+found and fixed in `signatureCaptureLWC.js`, and re-verified against a real
+action-trace payload, but the card still doesn't work after that fix was
+deployed; root cause of the remaining failure is unidentified. See the
+callout in [`examples/signature-capture.md`](examples/signature-capture.md).
 
 Four of the five examples query real Salesforce records live — none
 of them fabricate data, and a real query can legitimately return no match

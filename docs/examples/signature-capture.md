@@ -2,6 +2,15 @@
 
 Action: `GetSignatureCaptureAction` · CLT: `signatureCaptureCLT` · LWC: `signatureCaptureLWC`
 
+> **Known issue (2026-09-21): not yet working end-to-end.** The card was
+> reported empty/non-interactive in the live chat widget. A data-binding bug
+> in `signatureCaptureLWC.js` (getters reading `value.capture.*` instead of
+> `value.*` directly) was found and fixed, and confirmed correct against a
+> real action-trace payload — but the user has since reported the card is
+> **still** not working after that fix was deployed. Root cause of the
+> remaining failure is not yet identified. Treat this example as broken
+> until this note is removed.
+
 **Real data — queries `Case`, `Pricebook2`, `PricebookEntry`, and `Product2`
 live.** No canned values. This is the library's write-capable, interactive
 example: unlike the other three data-bearing examples (read-only display
