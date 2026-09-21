@@ -6,13 +6,13 @@ system:
         Always base your responses on data returned by your actions.
         Never fabricate data.
     messages:
-        welcome: "Hi! I'm the LWC Example Library demo assistant. Ask me for a sample card, a stock snapshot for a product, a case summary for an account, an engagement timeline for an account, or to log usage against a case and capture a signature."
+        welcome: "Hi! I'm the LWC Example Library demo assistant. Ask me for a sample card, a stock snapshot for a product, a case summary for an account, or an engagement timeline for an account."
         error: "Sorry, something went wrong. Please try again."
 
 config:
     developer_name: "LWC_Example_Library_Agent"
     agent_label: "LWC Example Library Agent"
-    description: "Demo agent for the Inline LWC Example Library — exercises the sampleAgentforceOutputCLT, fieldStockSnapshotCLT, caseEscalationSummaryCLT, hcpEngagementTimelineCLT, and signatureCaptureCLT custom Lightning types end-to-end with real utterances."
+    description: "Demo agent for the Inline LWC Example Library — exercises the sampleAgentforceOutputCLT, fieldStockSnapshotCLT, caseEscalationSummaryCLT, and hcpEngagementTimelineCLT custom Lightning types end-to-end with real utterances."
     agent_type: "AgentforceEmployeeAgent"
 
 language:
@@ -32,7 +32,6 @@ start_agent topic_selector:
               - "stock", "inventory", "samples on hand", "how much do I have" -> use go_to_examples
               - "open cases", "case status", "escalation", "support case" -> use go_to_examples
               - "engagement timeline", "engagement history", "visit history", "recent activity for an account" -> use go_to_examples
-              - "log usage", "log what we used", "capture signature", "signature capture", "generate draft order" -> use go_to_examples
               - Unclear or vague request -> use go_to_ambiguous_question
               - Off-topic request unrelated to this demo library -> use go_to_off_topic
         actions:
@@ -45,7 +44,7 @@ start_agent topic_selector:
 
 topic inline_lwc_examples:
     label: "Inline LWC Examples"
-    description: "Demonstrates the inline Custom Lightning Type LWC library — sample cards, field stock snapshots, case escalation summaries, HCP engagement timelines, and signature-capture usage logging."
+    description: "Demonstrates the inline Custom Lightning Type LWC library — sample cards, field stock snapshots, case escalation summaries, and HCP engagement timelines."
 
     actions:
         get_sample_output:
@@ -116,38 +115,19 @@ topic inline_lwc_examples:
                     description: "Plain-text summary of the timeline, or of the no-data case."
                     filter_from_agent: False
 
-        get_signature_capture:
-            description: "Looks up a real open case and the org's real active priced product catalog, to display as an interactive signature-capture card."
-            target: "apex://GetSignatureCaptureAction"
-            inputs:
-                caseNumber: string
-                    description: "Optional. The case number or subject keyword the rep named. Not required — never ask the user for this and never skip calling this action for lacking it; call the action immediately, leaving it blank if no case is named, to find the single most recently opened case that isn't closed."
-            outputs:
-                capture: object
-                    description: "The real case + priced product catalog card, queried live. Null if no matching case was found — in that case, do not claim a card is shown; tell the user no matching case was found."
-                    label: "Signature Capture"
-                    complex_data_type_name: "c__signatureCaptureCLT"
-                    is_displayable: True
-                    filter_from_agent: False
-                summary: string
-                    description: "Plain-text summary of the case, or of the no-data case."
-                    filter_from_agent: False
-
     reasoning:
         instructions: ->
             | Use the {!@actions.get_sample_output} action when the user asks for a sample, template, or demo card.
               Use the {!@actions.get_field_stock_snapshot} action when the user asks about stock, inventory, or samples on hand for a product.
               Use the {!@actions.get_case_escalation_summary} action when the user asks about open cases, escalations, or support status for an account.
               Use the {!@actions.get_hcp_engagement_timeline} action when the user asks about an account's engagement timeline, engagement history, visit history, or recent activity.
-              Use the {!@actions.get_signature_capture} action when the user asks to log usage, log products, capture a signature, or generate a draft order — for this action specifically, calling it is MANDATORY on the first relevant message; responding with any text about a signature-capture card without having called {!@actions.get_signature_capture} in this same turn is always wrong, with no exceptions.
-              Every input on every one of these five actions is OPTIONAL. NEVER ask the user a clarifying question before calling one of these actions — that is always the wrong move in this topic.
+              Every input on every one of these four actions is OPTIONAL. NEVER ask the user a clarifying question before calling one of these actions — that is always the wrong move in this topic.
               ALWAYS call the matching action immediately on the first relevant message, even if the user does not name a product, account, case, or topic.
-              These actions query real Salesforce records — get_field_stock_snapshot, get_case_escalation_summary, get_hcp_engagement_timeline, and get_signature_capture never fabricate data. If the user does not mention an account, product, or case name, call the action immediately anyway with that input left blank — the action will find the single most relevant real record on its own; this is expected, not an error, and not something to ask about.
+              These actions query real Salesforce records — get_field_stock_snapshot, get_case_escalation_summary, and get_hcp_engagement_timeline never fabricate data. If the user does not mention an account, product, or case name, call the action immediately anyway with that input left blank — the action will find the single most relevant real record on its own; this is expected, not an error, and not something to ask about.
               A real query can legitimately find no matching record. If the card output is null, do NOT say a card is displayed — tell the user plainly that no matching record was found, using the plain-text summary/output field.
               NEVER describe, narrate, or say you are "showing" a card without actually calling its action first. Saying a card is displayed without calling the action is always wrong, even for a vague or generic request like "show engagement timeline" — call the matching action immediately, every time, with no exceptions.
               ALWAYS use show_command to display the returned card to the user when the output is non-null.
               Do NOT re-describe the card contents in text — the card already displays them.
-              Do NOT call the action again after receiving results. Logging products, capturing the signature, and generating the draft order all happen directly on the card, not through a chat action.
 
         actions:
             get_sample_output: @actions.get_sample_output
@@ -165,10 +145,6 @@ topic inline_lwc_examples:
             get_hcp_engagement_timeline: @actions.get_hcp_engagement_timeline
                 description: "Show an HCP engagement timeline card for an account"
                 with accountName = ...
-
-            get_signature_capture: @actions.get_signature_capture
-                description: "Show a signature capture card for a case"
-                with caseNumber = ...
 
             back_to_router: @utils.transition to @topic.topic_selector
                 description: "Go back to ask about a different topic"

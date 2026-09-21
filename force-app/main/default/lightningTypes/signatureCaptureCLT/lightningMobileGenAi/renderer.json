@@ -1,9 +1,0 @@
-{
-  "renderer" : {
-    "componentOverrides" : {
-      "$" : {
-        "definition" : "c/signatureCaptureLWC"
-      }
-    }
-  }
-}
