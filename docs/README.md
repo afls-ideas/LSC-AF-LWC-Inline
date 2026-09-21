@@ -23,7 +23,8 @@ just inspecting code:
 
 **iPhone**, standard Salesforce Mobile App (Field Stock Snapshot example):
 
-![iPhone](images/field-stock-snapshot-iphone.png)
+<img src="images/field-stock-snapshot-iphone.png" alt="iPhone" width="300">
+
 
 > **Note on iPad/mobile support:** the standard Salesforce Mobile App on iPad
 > *does* support rendering inline LWCs from Agentforce chat, but this isn't
