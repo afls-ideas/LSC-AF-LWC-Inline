@@ -47,27 +47,6 @@ issues a real rep would hit.
 **Confirmed working in the standard Salesforce Mobile App on iPad**
 (2026-09-20) — see the screenshot in
 [`examples/field-stock-snapshot.md`](examples/field-stock-snapshot.md#confirmed-live).
-An earlier version of this note wrongly claimed the standard mobile app
-couldn't render CLT cards at all, based on a Connect API introspection
-endpoint rejecting a mobile query parameter; that endpoint's limitation
-doesn't reflect actual runtime rendering. The real cause of the earlier
-failures was a stale, un-activated `BotVersion` (see the activation
-caveat above) — once the correct version was active, cards rendered
-correctly on both the standard mobile app and desktop web.
-
-**New-LWC mobile propagation delay (2026-09-20):** the first time
-`hcpEngagementTimelineLWC` was tested on the standard Salesforce Mobile App
-— minutes after it was first deployed and the agent republished/activated —
-it failed with `Component c/hcpEngagementTimelineLWC is not allow-listed
-for Agentforce mobile rendering`. No allow-list object or Setup config for
-this was found anywhere (checked Tooling API `LightningComponentBundle`
-records and the AFLS knowledge base — nothing documents this mechanism).
-Comparing metadata timestamps, the three earlier examples had all been
-touched by a second deploy sometime after creation, while the new one had
-not; simply **retrying the same utterance a short while later, with no
-further changes**, made the card render correctly. Treat this error as a
-transient mobile-client propagation delay for brand-new LWC bundles, not a
-real missing configuration step — retry before investigating further.
 
 ## Test agent: already deployed via Agent Script (no Setup UI needed)
 
@@ -82,10 +61,7 @@ Its `inline_lwc_examples` topic wires all four actions above, including the
 `show_command` so the card renders instead of falling back to a text dump.
 
 This whole thing is CLI-deployable — no manual Agent Builder steps required.
-An earlier attempt to retrieve/create the agent via classic `Bot` metadata
-failed silently in this org (empty retrieve, unsupported `BotDefinition`
-Tooling query); the `aiAuthoringBundle` / Agent Script path below is what
-actually works. To reproduce from scratch:
+To reproduce from scratch:
 
 ```bash
 # 1. Generate boilerplate (already done — .agent file is hand-edited from here)
@@ -141,20 +117,3 @@ not a fixed/guaranteed value, since the three data-bearing examples now
 query real records. `slaDueDate` and `lastCountDate` come from real
 `CaseMilestone.TargetDate` / `ProductBatchItem.LastModifiedDate` fields and
 can be `null` or absent when the underlying record has no value.
-
-## HCP Engagement Timeline: known rendering flakiness
-
-Verified (2026-09-20) that `get_hcp_engagement_timeline` reliably queries
-and returns real data — confirmed via `sf agent preview` trace inspection
-for both a real account name and the blank/most-engaged-account fallback,
-and via the Connect API that the `hcpEngagementTimelineCLT` binding
-resolves cleanly (same shape as the working `fieldStockSnapshotCLT`
-binding). Despite that, the card has failed to render in the live chat UI
-on more than one attempt — the agent replies with only the text summary,
-no card — for the same utterance that works via `sf agent preview`. This
-matches a documented Agentforce behavior (see the sibling `Power_Agent_ADLC`
-project's `docs/LIGHTNING_TYPES.md`): CLT rendering can be nondeterministic,
-and a card can intermittently fall back to text for no code-level reason.
-If this reproduces consistently across many retries (not just once or
-twice), treat it as a real regression worth a deeper look; a single miss
-is expected flakiness, not evidence of a wiring bug.

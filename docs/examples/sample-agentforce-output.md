@@ -35,8 +35,8 @@ Input: optional `topic` (free text). Leaving it out uses the default sample topi
 ## What to verify
 
 - Same card renders identically on Web (`@api value`) and on the AFLS
-  mobile app (`CurrentPageReference` state params) — this is the thing the
-  original Pfizer Custom Lightning Type got wrong (web-only).
+  mobile app (`CurrentPageReference` state params) — a web-only
+  implementation is a common mistake this dual data path is meant to avoid.
 - If items are missing entirely, the LWC's `hasData` getter should fall back
   to "No data available." — try an utterance that would return no title,
   message, or items (not reachable from this action as-is; this is a code
