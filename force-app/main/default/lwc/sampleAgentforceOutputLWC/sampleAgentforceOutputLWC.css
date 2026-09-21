@@ -1,0 +1,18 @@
+.component-root {
+    padding: 0.5rem;
+}
+
+.title {
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.message {
+    margin: 0 0 8px;
+}
+
+.no-data {
+    color: #4f5d72;
+    font-size: 13px;
+    padding: 16px 0;
+}

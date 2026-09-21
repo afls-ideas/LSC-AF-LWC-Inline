@@ -1,0 +1,33 @@
+<template>
+    <div class="component-root">
+        <template if:true={hasData}>
+            <div class="header">
+                <div class="header-left">
+                    <lightning-icon icon-name="standard:case" size="small" class="case-icon"></lightning-icon>
+                    <template if:true={hasCaseLink}>
+                        <a href={caseUrl} target="_blank" rel="noopener noreferrer" class="case-number-link">
+                            <h3 class="case-number">Case {caseNumber}</h3>
+                            <lightning-icon icon-name="utility:new_window" size="xx-small" variant="bare" class="link-icon"></lightning-icon>
+                        </a>
+                    </template>
+                    <template if:false={hasCaseLink}>
+                        <h3 class="case-number">Case {caseNumber}</h3>
+                    </template>
+                </div>
+                <span class={priorityClass}>{priority}</span>
+            </div>
+            <p class="subject">{subject}</p>
+            <dl class="details">
+                <dt>Account</dt>
+                <dd>{accountName}</dd>
+                <dt>Status</dt>
+                <dd><span class={statusClass}>{status}</span></dd>
+                <dt>SLA Due</dt>
+                <dd>{slaDueDate}</dd>
+            </dl>
+        </template>
+        <template if:false={hasData}>
+            <div class="no-data slds-text-align_center">No case data available.</div>
+        </template>
+    </div>
+</template>

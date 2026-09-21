@@ -1,0 +1,5 @@
+{
+  "title" : "Case Escalation Summary",
+  "description" : "Life Sciences example: displays an open support Case's status, priority, and SLA due date for the account the rep is engaging with, so it can be surfaced mid-conversation without leaving the chat.",
+  "lightning:type" : "@apexClassType/c__CaseEscalationSummaryWrapper"
+}

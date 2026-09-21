@@ -1,0 +1,5 @@
+{
+  "title" : "HCP Engagement Timeline",
+  "description" : "Life Sciences example: displays a multi-track chronological timeline of an HCP account's recent engagement — visits, medical insights, inquiries, and event participation — on a shared time spine.",
+  "lightning:type" : "@apexClassType/c__HcpEngagementTimelineWrapper"
+}

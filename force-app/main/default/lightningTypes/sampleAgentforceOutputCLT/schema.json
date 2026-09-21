@@ -1,0 +1,5 @@
+{
+  "title" : "Sample Agentforce Output",
+  "description" : "Template inline output type for Agentforce actions. Duplicate this bundle + the matching LWC bundle to create a new library entry.",
+  "lightning:type" : "@apexClassType/c__SampleAgentforceOutputWrapper"
+}

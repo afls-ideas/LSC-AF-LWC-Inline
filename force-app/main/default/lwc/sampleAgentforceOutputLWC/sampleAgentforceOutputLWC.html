@@ -1,0 +1,22 @@
+<template>
+    <div class="component-root">
+        <template if:true={hasData}>
+            <template if:true={title}>
+                <h3 class="title">{title}</h3>
+            </template>
+            <template if:true={message}>
+                <p class="message">{message}</p>
+            </template>
+            <template if:true={hasItems}>
+                <ul class="slds-list_dotted">
+                    <template for:each={items} for:item="item">
+                        <li key={item}>{item}</li>
+                    </template>
+                </ul>
+            </template>
+        </template>
+        <template if:false={hasData}>
+            <div class="no-data slds-text-align_center">No data available.</div>
+        </template>
+    </div>
+</template>

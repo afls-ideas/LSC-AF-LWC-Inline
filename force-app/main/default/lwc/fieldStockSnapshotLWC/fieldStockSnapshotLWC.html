@@ -1,0 +1,21 @@
+<template>
+    <div class="component-root">
+        <template if:true={hasData}>
+            <div class="header">
+                <h3 class="product-name">{productName}</h3>
+                <span class={statusClass}>{statusLabel}</span>
+            </div>
+            <dl class="details">
+                <dt>On Hand</dt>
+                <dd>{onHandQty}</dd>
+                <dt>Reorder Threshold</dt>
+                <dd>{reorderThreshold}</dd>
+                <dt>Last Counted</dt>
+                <dd>{lastCountDate}</dd>
+            </dl>
+        </template>
+        <template if:false={hasData}>
+            <div class="no-data slds-text-align_center">No stock data available.</div>
+        </template>
+    </div>
+</template>

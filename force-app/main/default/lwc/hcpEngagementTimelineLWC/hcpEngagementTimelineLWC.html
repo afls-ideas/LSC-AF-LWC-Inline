@@ -1,0 +1,43 @@
+<template>
+    <div class="component-root">
+        <template if:true={hasData}>
+            <div class="header">
+                <h3 class="account-name">{accountName}</h3>
+            </div>
+            <p class="headline">{headline}</p>
+            <ol class="timeline">
+                <template for:each={events} for:item="event">
+                    <li key={event.key} class="timeline-event">
+                        <div class="event-date">{event.eventDate}</div>
+                        <div class="event-body">
+                            <div class="event-badges">
+                                <template if:true={event.hasRecordUrl}>
+                                    <a href={event.recordUrl} target="_blank" rel="noopener noreferrer" class={event.trackClass}>
+                                        <lightning-icon icon-name={event.trackIcon} size="xx-small" variant="bare" class="track-icon"></lightning-icon>
+                                        <span>{event.track}</span>
+                                    </a>
+                                </template>
+                                <template if:false={event.hasRecordUrl}>
+                                    <span class={event.trackClass}>
+                                        <lightning-icon icon-name={event.trackIcon} size="xx-small" variant="bare" class="track-icon"></lightning-icon>
+                                        <span>{event.track}</span>
+                                    </span>
+                                </template>
+                                <template if:true={event.status}>
+                                    <span class={event.statusClass}>{event.status}</span>
+                                </template>
+                            </div>
+                            <template if:true={event.title}>
+                                <div class="event-title">{event.title}</div>
+                            </template>
+                            <div class="event-detail">{event.detail}</div>
+                        </div>
+                    </li>
+                </template>
+            </ol>
+        </template>
+        <template if:false={hasData}>
+            <div class="no-data slds-text-align_center">No engagement history available.</div>
+        </template>
+    </div>
+</template>

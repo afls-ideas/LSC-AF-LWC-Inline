@@ -1,0 +1,54 @@
+.component-root {
+    padding: 0.75rem 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.product-name {
+    font-weight: 700;
+    margin: 0;
+}
+
+.status-badge {
+    border-radius: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-ok {
+    background-color: #eaf6ea;
+    color: #2e7d32;
+}
+
+.status-low {
+    background-color: #fdeaea;
+    color: #c62828;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.15rem 0.75rem;
+    margin: 0;
+}
+
+.details dt {
+    color: #706e6b;
+    font-size: 0.8rem;
+}
+
+.details dd {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.no-data {
+    color: #706e6b;
+    padding: 0.5rem 0;
+}

@@ -1,0 +1,129 @@
+.component-root {
+    padding: 0.9rem 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.6rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.case-icon {
+    flex-shrink: 0;
+}
+
+.case-number {
+    font-weight: 700;
+    margin: 0;
+}
+
+.case-number-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: #0b5cab;
+}
+
+.case-number-link:hover .case-number {
+    text-decoration: underline;
+}
+
+.case-number-link .case-number {
+    color: #0b5cab;
+}
+
+.link-icon {
+    --sds-c-icon-color-foreground: #0b5cab;
+    --slds-c-icon-color-foreground: #0b5cab;
+}
+
+.subject {
+    color: #444;
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.priority-badge {
+    border-radius: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.priority-high {
+    background-color: #fdeaea;
+    color: #c62828;
+}
+
+.priority-medium {
+    background-color: #fff4e5;
+    color: #b26a00;
+}
+
+.priority-low {
+    background-color: #eaf6ea;
+    color: #2e7d32;
+}
+
+.status-badge {
+    display: inline-block;
+    border-radius: 0.75rem;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-new {
+    background-color: #e8f0fe;
+    color: #1a56db;
+}
+
+.status-working {
+    background-color: #fff4e5;
+    color: #b26a00;
+}
+
+.status-escalated {
+    background-color: #fdeaea;
+    color: #c62828;
+}
+
+.status-closed {
+    background-color: #eaf6ea;
+    color: #2e7d32;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.15rem 0.75rem;
+    margin: 0;
+}
+
+.details dt {
+    color: #706e6b;
+    font-size: 0.8rem;
+}
+
+.details dd {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.no-data {
+    color: #706e6b;
+    padding: 0.5rem 0;
+}

@@ -1,0 +1,5 @@
+{
+  "title" : "Field Stock Snapshot",
+  "description" : "Life Sciences example: displays a rep's on-hand sample/device inventory for a product, flagging when it has dropped below the reorder threshold.",
+  "lightning:type" : "@apexClassType/c__FieldStockSnapshotWrapper"
+}

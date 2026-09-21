@@ -1,0 +1,159 @@
+.component-root {
+    padding: 0.9rem 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.6rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.account-name {
+    font-weight: 700;
+    margin: 0;
+}
+
+.headline {
+    color: #444;
+    font-size: 0.85rem;
+    margin: 0 0 0.75rem 0;
+}
+
+.timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid #dddbda;
+}
+
+.timeline-event {
+    position: relative;
+    padding: 0 0 0.9rem 1rem;
+}
+
+.timeline-event::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0.2rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #706e6b;
+}
+
+.timeline-event:last-child {
+    padding-bottom: 0;
+}
+
+.event-date {
+    color: #706e6b;
+    font-size: 0.75rem;
+    margin-bottom: 0.1rem;
+}
+
+.event-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.event-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.event-detail {
+    color: #444;
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+}
+
+.track-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 0.75rem;
+    padding: 0.15rem 0.6rem 0.15rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a.track-badge {
+    cursor: pointer;
+}
+
+a.track-badge:hover {
+    text-decoration: underline;
+}
+
+.track-icon {
+    --sds-c-icon-color-foreground: currentColor;
+    --slds-c-icon-color-foreground: currentColor;
+}
+
+.track-visit {
+    background-color: #eaf2fd;
+    color: #0b5cab;
+}
+
+.track-medical-insight {
+    background-color: #f3eafd;
+    color: #6b3fa0;
+}
+
+.track-inquiry {
+    background-color: #fff4e5;
+    color: #b25900;
+}
+
+.track-event-participation {
+    background-color: #eaf6ea;
+    color: #2e7d32;
+}
+
+.status-badge {
+    display: inline-block;
+    border-radius: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.status-planned {
+    background-color: #e8f0fe;
+    color: #1a56db;
+}
+
+.status-in-progress {
+    background-color: #fff4e5;
+    color: #b26a00;
+}
+
+.status-completed {
+    background-color: #eaf6ea;
+    color: #2e7d32;
+}
+
+.status-canceled {
+    background-color: #fdeaea;
+    color: #c62828;
+}
+
+.status-default {
+    background-color: #f3f2f2;
+    color: #444;
+}
+
+.no-data {
+    color: #706e6b;
+    padding: 0.5rem 0;
+}
