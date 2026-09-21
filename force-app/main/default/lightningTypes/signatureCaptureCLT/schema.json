@@ -1,0 +1,5 @@
+{
+  "title" : "Signature Capture",
+  "description" : "Life Sciences example: logs real priced products used against an open case, captures a confirmation signature, and generates a draft Order — the library's example of a write-capable, interactive inline card.",
+  "lightning:type" : "@apexClassType/c__SignatureCaptureWrapper"
+}

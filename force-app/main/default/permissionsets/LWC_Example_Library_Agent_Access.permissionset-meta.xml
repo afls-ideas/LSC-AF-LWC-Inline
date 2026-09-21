@@ -72,6 +72,26 @@
         <apexClass>HcpEngagementEventWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>GetSignatureCaptureAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GetSignatureCaptureRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GetSignatureCaptureResult</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SignatureCaptureWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SignatureCaptureLineWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Grants access to the LWC Example Library Agent and its backing Apex classes.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>LWC Example Library Agent Access</label>
