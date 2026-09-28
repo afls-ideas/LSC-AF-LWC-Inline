@@ -100,8 +100,7 @@ global class GetPresentationRecommendationAction {
         }
 
         Id versionId = thumbnailLinks[0].ContentDocument.LatestPublishedVersionId;
-        return URL.getOrgDomainUrl().toExternalForm()
-            + '/sfc/servlet.shepherd/version/renditionDownload?rendition=' + THUMBNAIL_RENDITION
+        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=' + THUMBNAIL_RENDITION
             + '&versionId=' + versionId;
     }
 }
