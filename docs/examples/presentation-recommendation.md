@@ -87,12 +87,19 @@ matching slide was found instead of claiming a card is shown.
   (`c__slideName`, `c__thumbnailUrl`, etc.) rather than staying blank — this
   is the dual-path behavior the whole library exists to demonstrate.
 - **Confirmed rendering correctly on both the standard Salesforce iPad app
-  and the web Agentforce chat panel (2026-09-28)** — see
-  `docs/images/presentation-recommendation-ipad.png` and
-  `docs/images/presentation-recommendation-web.png`. Multi-turn follow-up
+  and the web Agentforce chat panel (2026-09-28).** Multi-turn follow-up
   ("what about efficacy?" after "what should I show a customer about
   dosing") also confirmed working — the agent re-invokes the action with
   the new topic rather than reusing the first card.
+
+  **iPad**, standard Salesforce Mobile App:
+
+  ![iPad](../images/presentation-recommendation-ipad.png)
+
+  **Web**, Agentforce chat panel, multi-turn:
+
+  <img src="../images/presentation-recommendation-web.png" alt="Web" width="300">
+
 - **This example specifically depends on Agentforce inline LWC rendering
   being enabled for the org** — see the note in the main
   [`docs/README.md`](../README.md#note-on-enabling-agentforce-inline-lwc-rendering).
