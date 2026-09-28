@@ -22,11 +22,29 @@ JPG's latest `ContentVersion` is what the returned `thumbnailUrl` is built
 from:
 
 ```
-<orgDomain>/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=<ContentVersionId>
+/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB720BY480&versionId=<ContentVersionId>
 ```
 
 This is a session-authenticated URL — it only renders as an `<img>` inside
 the same org's Lightning/Agentforce session, not as a public link.
+
+**Must be relative, not absolute.** The Apex action returns this path
+**without** a domain prefix — do not build it with
+`URL.getOrgDomainUrl().toExternalForm()`. An earlier version did prefix it
+with the org's canonical My Domain host, which broke specifically on
+**iPad Safari** (mobile browser, not the native Salesforce Mobile App):
+Safari's cross-site cookie isolation withholds the session cookie on an
+`<img>` request to a domain that isn't the one currently loaded in the
+address bar (e.g. the visible session is on `*.lightning.force.com` but the
+absolute URL pointed at `*.my.salesforce.com`), so the rendition endpoint
+returned a login redirect instead of the image — a broken image icon, with
+no error surfaced anywhere. A relative path resolves against whatever
+domain the browser currently has loaded, reusing the same first-party
+session cookie already in the address bar, and works correctly across the
+native mobile app, desktop web, and Safari alike. Confirmed fixed on iPad
+Safari, 2026-09-28:
+
+<img src="../images/presentation-recommendation-ipad-safari.png" alt="iPad Safari" width="500">
 
 If no active slide matches, `recommendation` is `null` and `summary`
 explains why — the agent is instructed not to claim a card is shown in that
@@ -86,11 +104,14 @@ matching slide was found instead of claiming a card is shown.
 - On mobile, confirm the card renders from `CurrentPageReference` state
   (`c__slideName`, `c__thumbnailUrl`, etc.) rather than staying blank — this
   is the dual-path behavior the whole library exists to demonstrate.
-- **Confirmed rendering correctly on both the standard Salesforce iPad app
-  and the web Agentforce chat panel (2026-09-28).** Multi-turn follow-up
-  ("what about efficacy?" after "what should I show a customer about
-  dosing") also confirmed working — the agent re-invokes the action with
-  the new topic rather than reusing the first card.
+- **Confirmed rendering correctly on the standard Salesforce iPad app, iPad
+  mobile Safari, and the web Agentforce chat panel (2026-09-28).**
+  Multi-turn follow-up ("what about efficacy?" after "what should I show a
+  customer about dosing") also confirmed working — the agent re-invokes the
+  action with the new topic rather than reusing the first card. The
+  thumbnail URL **must be relative** (see above) — this is the one client
+  (iPad Safari) that will silently show a broken image if it regresses back
+  to an absolute, domain-qualified URL.
 
   **iPad**, standard Salesforce Mobile App:
 

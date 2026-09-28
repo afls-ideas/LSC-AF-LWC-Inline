@@ -34,6 +34,37 @@ just inspecting code:
 
 <img src="images/presentation-recommendation-web.png" alt="Web" width="300">
 
+**iPad, mobile Safari** (Presentation Recommendation example):
+
+<img src="images/presentation-recommendation-ipad-safari.png" alt="iPad Safari" width="500">
+
+### Note on file/image URLs returned from Apex: use relative, not absolute
+
+Any action that returns a Salesforce file/rendition URL (like the
+Presentation Recommendation example's `thumbnailUrl`) **must return a
+relative path**, e.g. `/sfc/servlet.shepherd/version/renditionDownload?...`
+— never build it with `URL.getOrgDomainUrl().toExternalForm()` or any other
+absolute, domain-qualified form.
+
+These URLs are session-authenticated, and the session cookie is scoped to
+whichever Salesforce domain the browser currently has loaded (e.g.
+`*.lightning.force.com`), which is not necessarily the org's canonical My
+Domain host that `URL.getOrgDomainUrl()` returns. **iPad mobile Safari** is
+the client that surfaces this: its cross-site cookie isolation withholds
+the session cookie on an `<img>` request to a different domain, so the
+rendition endpoint returns a login redirect instead of the image — a
+silently broken image icon, no error anywhere. The native Salesforce Mobile
+App and desktop web browsers didn't show this symptom, which made it easy
+to miss during initial testing — always include iPad Safari specifically
+when verifying a new example that returns a file/image URL, not just the
+native mobile app.
+
+A relative path resolves against whatever domain is currently loaded,
+reusing the same first-party session cookie already in the address bar, and
+is correct on every client. See
+[`examples/presentation-recommendation.md`](examples/presentation-recommendation.md)
+for the full before/after.
+
 ### Note on enabling Agentforce inline LWC rendering
 
 **Every example in this library — Web and Mobile alike — depends on
