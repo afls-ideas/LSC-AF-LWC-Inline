@@ -1,6 +1,6 @@
 # Testing the Inline LWC Library with a Live Agent
 
-This library ships four example pairs of Custom Lightning Type (CLT) +
+This library ships five example pairs of Custom Lightning Type (CLT) +
 inline LWC so you can test each one with real chat utterances instead of
 just inspecting code:
 
@@ -10,6 +10,7 @@ just inspecting code:
 | Field Stock Snapshot | `GetFieldStockSnapshotAction` | `fieldStockSnapshotCLT` | `fieldStockSnapshotLWC` | Real — live `ProductBatchItem` query |
 | Case Escalation Summary | `GetCaseEscalationSummaryAction` | `caseEscalationSummaryCLT` | `caseEscalationSummaryLWC` | Real — live `Case`/`CaseMilestone` query |
 | HCP Engagement Timeline | `GetHcpEngagementTimelineAction` | `hcpEngagementTimelineCLT` | `hcpEngagementTimelineLWC` | Real — live query across `Visit`, `MedicalInsightAccount`, `LSDO_Medical_Conference_Activity__c`, `Inquiry` |
+| Presentation Recommendation | `GetPresentationRecommendationAction` | `presentationRecommendationCLT` | `presentationRecommendationLWC` | Real — live query across `Presentation`, `PresentationLinkedPage`, `PresentationPage`, `ContentDocumentLink` (returns a real slide thumbnail image) |
 
 ## Screenshots: confirmed rendering on Web, iPad, and iPhone
 
@@ -25,13 +26,32 @@ just inspecting code:
 
 <img src="images/field-stock-snapshot-iphone.png" alt="iPhone" width="300">
 
+**iPad**, standard Salesforce Mobile App (Presentation Recommendation example):
 
-> **Note on iPad/mobile support:** the standard Salesforce Mobile App on iPad
-> *does* support rendering inline LWCs from Agentforce chat, but this isn't
-> turned on by default — it requires opening a case with Salesforce to have
-> it enabled for the org.
+![iPad](images/presentation-recommendation-ipad.png)
 
-Three of the four examples query real Salesforce records live — none
+**Web**, Agentforce chat panel, multi-turn (Presentation Recommendation example):
+
+<img src="images/presentation-recommendation-web.png" alt="Web" width="300">
+
+### Note on enabling Agentforce inline LWC rendering
+
+**Every example in this library — Web and Mobile alike — depends on
+Agentforce inline LWC rendering being enabled for the org.** This is not on
+by default; it requires **opening a case with Salesforce Support** to have
+it turned on. Without it, actions still run and return real data (visible in
+the plain-text `summary`/chat reply and in `sf agent preview` traces), but
+the card itself silently never renders — no card, no error, nothing in the
+chat to indicate the CLT/LWC binding was even attempted. If a brand-new org
+returns text-only responses for every example in this library with no
+errors anywhere, this is the first thing to check — confirm the case has
+been filed and the feature enabled before debugging anything else.
+
+This applies equally to the standard Salesforce Mobile App on iPad/iPhone,
+which supports the same rendering path but needs the same case-gated
+enablement.
+
+Four of the five examples query real Salesforce records live — none
 of them fabricate data, and a real query can legitimately return no match
 (the card is `null` in that case; see each example's doc for the exact
 "no data" behavior). Only the **template scaffold** stays canned: it exists
@@ -40,7 +60,7 @@ purely as a generic, duplicable starting point for a new example
 start a new example") and has no natural real-object mapping of its own —
 converting it to real data would defeat its purpose as boilerplate.
 
-Because these three now return real, live-org data instead of fixed
+Because these four now return real, live-org data instead of fixed
 values, the utterance → expected-response examples in
 [`examples/`](examples/) show a **worked example from a specific test run**,
 not a guaranteed reproducible value — the exact numbers/names will drift as
@@ -74,12 +94,12 @@ A standalone **LWC Example Library Agent** — deliberately separate from
 `LS_MedTech_Field_Sales_Agent` and `Visit_Compliance_Agent` — is defined as
 an **Agent Script** (`.agent` file) in
 [`force-app/main/default/aiAuthoringBundles/LWC_Example_Library_Agent/`](../force-app/main/default/aiAuthoringBundles/LWC_Example_Library_Agent/LWC_Example_Library_Agent.agent).
-Its `inline_lwc_examples` topic wires all four actions above, including the
+Its `inline_lwc_examples` topic wires all five actions above, including the
 `complex_data_type_name` binding to each CLT (`c__sampleAgentforceOutputCLT`,
 `c__fieldStockSnapshotCLT`, `c__caseEscalationSummaryCLT`,
-`c__hcpEngagementTimelineCLT`) and instructs the
-planner to always use `show_command` so the card renders instead of
-falling back to a text dump.
+`c__hcpEngagementTimelineCLT`, `c__presentationRecommendationCLT`) and
+instructs the planner to always use `show_command` so the card renders
+instead of falling back to a text dump.
 
 This whole thing is CLI-deployable — no manual Agent Builder steps required.
 To reproduce from scratch:
@@ -134,7 +154,7 @@ in the actual chat widget/app.
 
 Each example file lists the exact utterance, which action fires, and a
 worked example of the real data it returned during a confirmed live test —
-not a fixed/guaranteed value, since the three data-bearing examples now
+not a fixed/guaranteed value, since the four data-bearing examples now
 query real records. `slaDueDate` and `lastCountDate` come from real
 `CaseMilestone.TargetDate` / `ProductBatchItem.LastModifiedDate` fields and
 can be `null` or absent when the underlying record has no value.

@@ -72,6 +72,22 @@
         <apexClass>HcpEngagementEventWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>GetPresentationRecommendationAction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GetPresentationRecommendationRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GetPresentationRecommendationResult</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PresentationRecommendationWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Grants access to the LWC Example Library Agent and its backing Apex classes.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>LWC Example Library Agent Access</label>

@@ -12,5 +12,5 @@
         <members>*</members>
         <name>LightningTypeBundle</name>
     </types>
-    <version>68.0</version>
+    <version>67.0</version>
 </Package>
