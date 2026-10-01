@@ -19,6 +19,14 @@ just inspecting code:
 
 ![Web](images/hcp-engagement-timeline-web.png)
 
+**iPad Safari** (HCP Engagement Timeline example):
+
+<img src="images/hcp-engagement-timeline-ipad-safari.png" alt="iPad Safari" width="500">
+
+**iPad Safari** (HCP Affiliation Network example):
+
+<img src="images/hcp-affiliation-network-ipad-safari.png" alt="iPad Safari" width="500">
+
 **iPad**, standard Salesforce Mobile App (Field Stock Snapshot example):
 
 ![iPad](images/field-stock-snapshot-ipad.png)
