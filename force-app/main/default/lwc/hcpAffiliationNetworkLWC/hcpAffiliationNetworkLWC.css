@@ -1,0 +1,126 @@
+.component-root {
+    padding: 0.9rem 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.6rem;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.account-name {
+    font-weight: 700;
+    margin: 0;
+}
+
+.headline {
+    color: #444;
+    font-size: 0.85rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.graph {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 22rem;
+}
+
+.edge {
+    stroke-linecap: round;
+}
+
+.edge-strong {
+    stroke: #0b5cab;
+    stroke-width: 2;
+}
+
+.edge-soft {
+    stroke: #b0adab;
+    stroke-width: 1;
+}
+
+.node {
+    stroke-width: 2;
+}
+
+.node-center {
+    fill: #0b5cab;
+    stroke: #04396b;
+}
+
+.node-hco {
+    fill: #2e7d32;
+    stroke: #1b4f20;
+}
+
+.node-hcp {
+    fill: #6b3fa0;
+    stroke: #432768;
+}
+
+.node-label {
+    font-size: 0.6rem;
+    fill: #444;
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    color: #444;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.legend-swatch {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+}
+
+.legend-center {
+    background-color: #0b5cab;
+}
+
+.legend-hco {
+    background-color: #2e7d32;
+}
+
+.legend-hcp {
+    background-color: #6b3fa0;
+}
+
+.legend-line {
+    display: inline-block;
+    width: 1rem;
+    height: 0;
+    border-top: 2px solid #0b5cab;
+}
+
+.legend-line-strong {
+    border-top-style: solid;
+    border-top-color: #0b5cab;
+}
+
+.legend-line-soft {
+    border-top-style: dashed;
+    border-top-color: #b0adab;
+}
+
+.no-data {
+    color: #706e6b;
+    padding: 0.5rem 0;
+}

@@ -1,0 +1,5 @@
+{
+  "title" : "HCP Affiliation Network",
+  "description" : "Life Sciences example: displays an HCP's real affiliation network — the organizations they're affiliated with and other providers who share those organizations — as a force-directed graph.",
+  "lightning:type" : "@apexClassType/c__HcpAffiliationNetworkWrapper"
+}

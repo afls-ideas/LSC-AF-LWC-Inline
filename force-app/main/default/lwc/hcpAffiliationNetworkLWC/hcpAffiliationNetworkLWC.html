@@ -1,0 +1,43 @@
+<template>
+    <div class="component-root">
+        <template if:true={hasData}>
+            <div class="header">
+                <h3 class="account-name">{accountName}</h3>
+            </div>
+            <p class="headline">{headline}</p>
+            <svg class="graph" viewBox={viewBox} role="img" aria-label={headline}>
+                <template for:each={graphEdges} for:item="edge">
+                    <line
+                        key={edge.key}
+                        class={edge.cssClass}
+                        x1={edge.x1}
+                        y1={edge.y1}
+                        x2={edge.x2}
+                        y2={edge.y2}
+                        stroke-dasharray={edge.strokeDasharray}
+                    >
+                        <title>{edge.title}</title>
+                    </line>
+                </template>
+                <template for:each={graphNodes} for:item="node">
+                    <g key={node.id}>
+                        <circle class={node.cssClass} cx={node.x} cy={node.y} r={node.radius}>
+                            <title>{node.label}</title>
+                        </circle>
+                        <text class="node-label" x={node.x} y={node.labelY} text-anchor="middle">{node.shortLabel}</text>
+                    </g>
+                </template>
+            </svg>
+            <div class="legend">
+                <span class="legend-item"><span class="legend-swatch legend-center"></span>This HCP</span>
+                <span class="legend-item"><span class="legend-swatch legend-hco"></span>Organization</span>
+                <span class="legend-item"><span class="legend-swatch legend-hcp"></span>Other provider</span>
+                <span class="legend-item"><span class="legend-line legend-line-strong"></span>Primary / hard affiliation</span>
+                <span class="legend-item"><span class="legend-line legend-line-soft"></span>Soft affiliation</span>
+            </div>
+        </template>
+        <template if:false={hasData}>
+            <div class="no-data slds-text-align_center">No affiliation network available.</div>
+        </template>
+    </div>
+</template>

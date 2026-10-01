@@ -1,18 +1,18 @@
 system:
     instructions: |
         You are a demo assistant for the Inline LWC Example Library.
-        You show sample cards, field stock snapshots, case escalation summaries, HCP engagement timelines, and presentation slide recommendations.
+        You show sample cards, field stock snapshots, case escalation summaries, HCP engagement timelines, HCP affiliation networks, and presentation slide recommendations.
         You are an AI assistant, not a human.
         Always base your responses on data returned by your actions.
         Never fabricate data.
     messages:
-        welcome: "Hi! I'm the LWC Example Library demo assistant. Ask me for a sample card, a stock snapshot for a product, a case summary for an account, an engagement timeline for an account, or a presentation slide recommendation for a topic."
+        welcome: "Hi! I'm the LWC Example Library demo assistant. Ask me for a sample card, a stock snapshot for a product, a case summary for an account, an engagement timeline for an account, an affiliation network for an HCP, or a presentation slide recommendation for a topic."
         error: "Sorry, something went wrong. Please try again."
 
 config:
     developer_name: "LWC_Example_Library_Agent"
     agent_label: "LWC Example Library Agent"
-    description: "Demo agent for the Inline LWC Example Library — exercises the sampleAgentforceOutputCLT, fieldStockSnapshotCLT, caseEscalationSummaryCLT, hcpEngagementTimelineCLT, and presentationRecommendationCLT custom Lightning types end-to-end with real utterances."
+    description: "Demo agent for the Inline LWC Example Library — exercises the sampleAgentforceOutputCLT, fieldStockSnapshotCLT, caseEscalationSummaryCLT, hcpEngagementTimelineCLT, hcpAffiliationNetworkCLT, and presentationRecommendationCLT custom Lightning types end-to-end with real utterances."
     agent_type: "AgentforceEmployeeAgent"
 
 language:
@@ -32,6 +32,7 @@ start_agent topic_selector:
               - "stock", "inventory", "samples on hand", "how much do I have" -> use go_to_examples
               - "open cases", "case status", "escalation", "support case" -> use go_to_examples
               - "engagement timeline", "engagement history", "visit history", "recent activity for an account" -> use go_to_examples
+              - "affiliation", "affiliation network", "affiliation graph", "who is this HCP affiliated with", "referral network" -> use go_to_examples
               - "presentation", "slide", "detail aid", "content recommendation", "what should I show" -> use go_to_examples
               - Unclear or vague request -> use go_to_ambiguous_question
               - Off-topic request unrelated to this demo library -> use go_to_off_topic
@@ -45,7 +46,7 @@ start_agent topic_selector:
 
 topic inline_lwc_examples:
     label: "Inline LWC Examples"
-    description: "Demonstrates the inline Custom Lightning Type LWC library — sample cards, field stock snapshots, case escalation summaries, HCP engagement timelines, and presentation slide recommendations."
+    description: "Demonstrates the inline Custom Lightning Type LWC library — sample cards, field stock snapshots, case escalation summaries, HCP engagement timelines, HCP affiliation networks, and presentation slide recommendations."
 
     actions:
         get_sample_output:
@@ -116,6 +117,23 @@ topic inline_lwc_examples:
                     description: "Plain-text summary of the timeline, or of the no-data case."
                     filter_from_agent: False
 
+        get_hcp_affiliation_network:
+            description: "Returns a real affiliation network for an HCP — the organizations they're affiliated with and other providers who share those organizations — queried live from ProviderAffiliation, to display as a visual force-directed graph."
+            target: "apex://GetHcpAffiliationNetworkAction"
+            inputs:
+                accountName: string
+                    description: "Optional. The HCP the rep asked about. Not required — never ask the user for this; call the action immediately, leaving it blank if no HCP is named, to use the real HCP with the most affiliation records."
+            outputs:
+                network: object
+                    description: "The real affiliation network card, queried live. Null if the HCP has no recorded affiliations — in that case, do not claim a card is shown; tell the user no affiliation network was found."
+                    label: "HCP Affiliation Network"
+                    complex_data_type_name: "c__hcpAffiliationNetworkCLT"
+                    is_displayable: True
+                    filter_from_agent: False
+                summary: string
+                    description: "Plain-text summary of the network, or of the no-data case."
+                    filter_from_agent: False
+
         get_presentation_recommendation:
             description: "Recommends the rep's best-matching real active presentation slide for a topic, queried live from Presentation/PresentationPage, with its thumbnail image, to display as a visual card."
             target: "apex://GetPresentationRecommendationAction"
@@ -139,10 +157,11 @@ topic inline_lwc_examples:
               Use the {!@actions.get_field_stock_snapshot} action when the user asks about stock, inventory, or samples on hand for a product.
               Use the {!@actions.get_case_escalation_summary} action when the user asks about open cases, escalations, or support status for an account.
               Use the {!@actions.get_hcp_engagement_timeline} action when the user asks about an account's engagement timeline, engagement history, visit history, or recent activity.
+              Use the {!@actions.get_hcp_affiliation_network} action when the user asks about an HCP's affiliation network, affiliation graph, who they're affiliated with, or their referral network.
               Use the {!@actions.get_presentation_recommendation} action when the user asks for a presentation, slide, detail aid, or content recommendation, or asks what to show a customer/HCP about a topic.
-              Every input on every one of these five actions is OPTIONAL. NEVER ask the user a clarifying question before calling one of these actions — that is always the wrong move in this topic.
+              Every input on every one of these six actions is OPTIONAL. NEVER ask the user a clarifying question before calling one of these actions — that is always the wrong move in this topic.
               ALWAYS call the matching action immediately on the first relevant message, even if the user does not name a product, account, case, or topic.
-              These actions query real Salesforce records — get_field_stock_snapshot, get_case_escalation_summary, get_hcp_engagement_timeline, and get_presentation_recommendation never fabricate data. If the user does not mention an account, product, case, or topic name, call the action immediately anyway with that input left blank — the action will find the single most relevant real record on its own; this is expected, not an error, and not something to ask about.
+              These actions query real Salesforce records — get_field_stock_snapshot, get_case_escalation_summary, get_hcp_engagement_timeline, get_hcp_affiliation_network, and get_presentation_recommendation never fabricate data. If the user does not mention an account, product, case, or topic name, call the action immediately anyway with that input left blank — the action will find the single most relevant real record on its own; this is expected, not an error, and not something to ask about.
               A real query can legitimately find no matching record. If the card output is null, do NOT say a card is displayed — tell the user plainly that no matching record was found, using the plain-text summary/output field.
               NEVER describe, narrate, or say you are "showing" a card without actually calling its action first. Saying a card is displayed without calling the action is always wrong, even for a vague or generic request like "show engagement timeline" — call the matching action immediately, every time, with no exceptions.
               ALWAYS use show_command to display the returned card to the user when the output is non-null.
@@ -163,6 +182,10 @@ topic inline_lwc_examples:
 
             get_hcp_engagement_timeline: @actions.get_hcp_engagement_timeline
                 description: "Show an HCP engagement timeline card for an account"
+                with accountName = ...
+
+            get_hcp_affiliation_network: @actions.get_hcp_affiliation_network
+                description: "Show an HCP affiliation network graph for an HCP"
                 with accountName = ...
 
             get_presentation_recommendation: @actions.get_presentation_recommendation
